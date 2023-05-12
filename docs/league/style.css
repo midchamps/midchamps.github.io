@@ -77,7 +77,7 @@ header {
     display: block;
     background-image: url( "images/mobile/image2.png" );
     max-width: 100%;
-  height: auto;
+    height: auto;
   }
 }
 
@@ -87,7 +87,7 @@ header {
     display: block;
     background-image: url( "images/desktop/image2.png" );
     max-width: 100%;
-  height: auto;
+    height: auto;
   }
 }
 
@@ -100,6 +100,13 @@ header {
   font-size: 1.2rem;
   color: #222;
   background-color: transparent;
+}
+
+#img.source-image {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .download-row {

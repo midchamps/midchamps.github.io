@@ -1,0 +1,44 @@
+body {
+  background-color: green;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+.carousel_container {
+  position: relative;
+  background-color: red;
+  padding-left: 24px;
+  width: 990px;
+  overflow: hidden;
+}
+
+.carousel_items {
+  position: relative;
+  cursor: default !important;
+}
+
+.carousel_item {
+  float: left;
+  border: 0px solid #cc0000;
+}
+.carousel_item img {
+  border-radius: 8px;
+  margin: 10px;
+}
+
+.grab {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.grabbing {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
