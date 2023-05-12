@@ -1,0 +1,228 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0px;
+  padding-top: 3.2rem;
+  /* Add space at the top for the fixed header */
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-wrapper {
+  display: none;
+}
+
+.image-wrapper img,
+.image-wrapper video {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  height: auto;
+}
+
+header {
+  width: 100%;
+  height: 3.2rem;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 501;
+}
+
+.header-logo {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  width: 112px;
+  height: 30px;
+  transform: translateY(-50%);
+  transition: all 1s ease-in-out;
+  z-index: 501;
+}
+
+.header-logo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Show mobile images on small screens */
+@media (max-width: 767px) {
+  .image-wrapper.mobile {
+    display: block;
+  }
+}
+
+/* Show desktop images on larger screens */
+@media (min-width: 768px) {
+  .image-wrapper.desktop {
+    display: block;
+  }
+}
+
+.timer-wrapper {
+  display: none;
+}
+/* Show mobile images on small screens */
+@media (max-width: 767px) {
+  .timer-wrapper.mobile {
+    display: block;
+    background-image: url( "images/mobile/image2.png" );
+    max-width: 100%;
+  height: auto;
+  }
+}
+
+/* Show desktop images on larger screens */
+@media (min-width: 768px) {
+  .timer-wrapper.desktop {
+    display: block;
+    background-image: url( "images/desktop/image2.png" );
+    max-width: 100%;
+  height: auto;
+  }
+}
+
+.timer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 1.2rem;
+  color: #222;
+  background-color: transparent;
+}
+
+.download-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 1.2rem;
+  color: #222;
+  background-color: #ffc496;
+}
+
+.download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 1.2rem;
+  color: #222;
+  background-color: #ffc496;
+}
+
+.download-text {
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px;
+}
+
+.download-button {
+  font-size: 0.8rem;
+  text-align: center;
+  flex-direction: row;
+  display: flex;
+  margin: 5px;
+  width: 190px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #222;
+  color: white;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-button text {
+  margin-right: 14px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.download-button img {
+  margin-right: 10px;
+  width: 24px;
+  height: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  padding-top: 3.2rem;
+  padding-bottom: 4.2rem;
+  font-size: 1.0rem;
+  line-height: 1.8rem;
+  background-color: #222;
+  color: #B1B8C0;
+}
+
+.footer-logo {
+  display: block;
+  margin: 0 0 5.4rem 0;
+  padding: 0;
+  outline: 0;
+  border: none;
+  width: 93px;
+  height: 21px;
+  background: url("../images/logo.png") no-repeat center;
+  background-size: 93px 21px;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.footer-button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 0;
+  width: 100%;
+  height: 4.2rem;
+  font-size: 1.5rem;
+  background-color: #FA5F00;
+  border-color: #FA5F00;
+  color: #FFF;
+  position: fixed;
+}
+
+.footer-bottom {
+  margin-top: 6.6rem;
+  text-align: center;
+}
+
+.footer-bottom .copyright span {
+  display: inline-block;
+  padding: 0 2rem 0 2.4rem;
+}
+
+.footer-bottom .copyright span::after {
+  content: "|";
+  display: inline-block;
+  padding: 0 2rem 0 2.4rem;
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom .copyright span:last-child::after {
+  display: none;
+}

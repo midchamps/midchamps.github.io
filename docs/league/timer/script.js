@@ -1,290 +1,126 @@
 console.clear();
-// Calculate the remaining time
-const now = new Date();
-const targetDate = new Date("2023-06-31T00:00:00");
-var remainingTime = targetDate - now;
-// Calculate remaining days, hours, minutes, and seconds
-var remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-var remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-var remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-var d = remainingDays;
-var h = remainingHours;
-var m = remainingMinutes;
-var s = remainingSeconds;
-
-a = h.toString().split("");
-h1 = parseInt(a[0]) + 1;
-h2 = parseInt(a[1]) + 1;
-
-//add 1 for exact num
-$("ul.hourPlay2 li:nth-child(" + h1 + ")").addClass("active");
-$("ul.hourPlay li:nth-child(" + h2 + ")").addClass("active");
-
-m.toString().split("");
-m1 = parseInt(a[0]) + 1;
-m2 = parseInt(a[1]) + 1;
-
-$("ul.minutePlay2 li:nth-child(" + m1 + ")").addClass("active");
-$("ul.minutePlay li:nth-child(" + m2 + ")").addClass("active");
-
-a = s.toString().split("");
-s1 = parseInt(a[0]) + 1;
-s2 = parseInt(a[1]) + 1;
-
-$("ul.secondPlay2 li:nth-child(" + s1 + ")").addClass("active");
-$("ul.secondPlay li:nth-child(" + s2 + ")").addClass("active");
-
-// UI 업데이트 함수
-function updateUI() {
-  // remainingTime 값을 사용하여 UI 업데이트
-  remainingSeconds = Math.floor((remainingTime / 1000) % 60);
-  remainingMinutes = Math.floor((remainingTime / 1000 / 60) % 60);
-  remainingHours = Math.floor((remainingTime / 1000 / 60 / 60) % 24);
-  remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-  // 남은 시간이 음수인 경우 0으로 초기화
-  remainingSeconds = Math.max(remainingSeconds, 0);
-  remainingMinutes = Math.max(remainingMinutes, 0);
-  remainingHours = Math.max(remainingHours, 0);
-  remainingDays = Math.max(remainingDays, 0);
-  // UI 엘리먼트 업데이트
-  d = remainingDays;
-  h = remainingHours;
-  m = remainingMinutes;
-  s = remainingSeconds;
-  a = h.toString().split("");
+function CountdownTracker(label, value){
+  var el = document.createElement('div');
+  el.className = 'flip-clock__piece';
   
-  h1 = parseInt(a[0]) + 1;
-  h2 = parseInt(a[1]) + 1;
-
-  //add 1 for exact num
-  $("ul.hourPlay2 li:nth-child(" + h1 + ")").addClass("active");
-  $("ul.hourPlay li:nth-child(" + h2 + ")").addClass("active");
-
-  m.toString().split("");
-  m1 = parseInt(a[0]) + 1;
-  m2 = parseInt(a[1]) + 1;
-
-  $("ul.minutePlay2 li:nth-child(" + m1 + ")").addClass("active");
-  $("ul.minutePlay li:nth-child(" + m2 + ")").addClass("active");
-
-  a = s.toString().split("");
-  s1 = parseInt(a[0]) + 1;
-  s2 = parseInt(a[1]) + 1;
-
-  $("ul.secondPlay2 li:nth-child(" + s1 + ")").addClass("active");
-  $("ul.secondPlay li:nth-child(" + s2 + ")").addClass("active");
+  var piece = document.createElement('span');
+  piece.className = 'flip-clock__piece';
+  piece.innerHTML = '<span class="flip-clock__slot">' + label + '</span>' 
+    + '<b class="flip-clock__card card">'
+      +'<b class="card__top"></b>'
+      +'<b class="card__bottom"></b>'
+      +'<b class="card__back">'
+        +'<b class="card__bottom"></b>'
+      +'</b>'
+    +'</b>';
   
-  secondPlay();
-}
-
-// 1초마다 remainingTime 값을 갱신하고 UI 업데이트
-setInterval(function () {
-  remainingTime -= 1000;
-  updateUI();
-}, 1000);
-
-// 초기에 UI 업데이트
-updateUI();
-
-function secondPlay() {
-  $("body").removeClass("play");
-  var aa = $("ul.secondPlay li.active");
-
-  if (aa.html() == undefined) {
-    aa = $("ul.secondPlay li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.secondPlay li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.secondPlay li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    secondPlay2();
-  } else {
-    $("ul.secondPlay li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
+  el.appendChild(piece);
+  
+  if (label != '초') {
+    var colon = document.createElement('span');
+    colon.className = 'flip-colon';
+    colon.innerText = ':';
+    el.appendChild(colon);
   }
-}
 
-function secondPlay2() {
-  $("body").removeClass("play");
-  var aa = $("ul.secondPlay2 li.active");
+  this.el = el;
+  
+  var top = el.querySelector('.card__top'),
+      bottom = el.querySelector('.card__bottom'),
+      back = el.querySelector('.card__back'),
+      backBottom = el.querySelector('.card__back .card__bottom');
 
-  if (aa.html() == undefined) {
-    aa = $("ul.secondPlay2 li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.secondPlay2 li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.secondPlay2 li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    minutePlay();
-  } else {
-    $("ul.secondPlay2 li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
+  this.update = function(val){
+    val = ( '0' + val ).slice(-2);
+    if ( val !== this.currentValue ) {
+      
+      if ( this.currentValue >= 0 ) {
+        back.setAttribute('data-value', this.currentValue);
+        bottom.setAttribute('data-value', this.currentValue);
+      }
+      this.currentValue = val;
+      top.innerText = this.currentValue;
+      backBottom.setAttribute('data-value', this.currentValue);
+
+      this.el.classList.remove('flip');
+      void this.el.offsetWidth;
+      this.el.classList.add('flip');
+    }
   }
+  
+  this.update(value);
 }
 
-function minutePlay() {
-  $("body").removeClass("play");
-  var aa = $("ul.minutePlay li.active");
+// Calculation adapted from https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
 
-  if (aa.html() == undefined) {
-    aa = $("ul.minutePlay li").eq();
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.minutePlay li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.minutePlay li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    minutePlay2();
-  } else {
-    $("ul.minutePlay li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  return {
+    'Total': t,
+    '일': Math.floor(t / (1000 * 60 * 60 * 24)),
+    '시간': Math.floor((t / (1000 * 60 * 60)) % 24),
+    '분': Math.floor((t / 1000 / 60) % 60),
+    '초': Math.floor((t / 1000) % 60)
+  };
+}
+
+function getTime() {
+  var t = new Date();
+  return {
+    '일': t,
+    '시간': t.getHours() % 12,
+    '분': t.getMinutes(),
+    '초': t.getSeconds()
+  };
+}
+
+function Clock(countdown,callback) {
+  countdown = countdown ? new Date(Date.parse(countdown)) : false;
+  callback = callback || function(){};
+  
+  var updateFn = countdown ? getTimeRemaining : getTime;
+
+  this.el = document.createElement('div');
+  this.el.className = 'flip-clock';
+
+  var trackers = {},
+      t = updateFn(countdown),
+      key, timeinterval;
+
+  for ( key in t ){
+    if ( key === 'Total' ) { continue; }
+    trackers[key] = new CountdownTracker(key, t[key]);
+    this.el.appendChild(trackers[key].el);
   }
-}
-function minutePlay2() {
-  $("body").removeClass("play");
-  var aa = $("ul.minutePlay2 li.active");
 
-  if (aa.html() == undefined) {
-    aa = $("ul.minutePlay2 li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.minutePlay2 li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.minutePlay2 li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    hourPlay();
-  } else {
-    $("ul.minutePlay2 li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
+  var i = 0;
+  function updateClock() {
+    timeinterval = requestAnimationFrame(updateClock);
+    
+    // throttle so it's not constantly updating the time.
+    if ( i++ % 10 ) { return; }
+    
+    var t = updateFn(countdown);
+    if ( t.Total < 0 ) {
+      cancelAnimationFrame(timeinterval);
+      for ( key in trackers ){
+        trackers[key].update( 0 );
+      }
+      callback();
+      return;
+    }
+    
+    for ( key in trackers ){
+      trackers[key].update( t[key] );
+    }
   }
+
+  setTimeout(updateClock,500);
 }
 
-function hourPlay() {
-  $("body").removeClass("play");
-  var aa = $("ul.hourPlay li.active");
-
-  if (aa.html() == undefined) {
-    aa = $("ul.hourPlay li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.hourPlay li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.hourPlay li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    hourPlay2();
-  } else {
-    $("ul.hourPlay li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  }
-}
-
-function hourPlay2() {
-  $("body").removeClass("play");
-  var aa = $("ul.hourPlay2 li.active");
-
-  if (aa.html() == undefined) {
-    aa = $("ul.hourPlay2 li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.hourPlay2 li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.hourPlay2 li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-    dayPlay();
-  } else {
-    $("ul.hourPlay2 li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  }
-}
-
-function dayPlay() {
-  $("body").removeClass("play");
-  var aa = $("ul.dayPlay li.active");
-
-  if (aa.html() == undefined) {
-    aa = $("ul.dayPlay li").eq(0);
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  } else if (aa.is(":last-child")) {
-    $("ul.dayPlay li").removeClass("before");
-    aa.addClass("before").removeClass("active");
-    aa = $("ul.dayPlay li").eq(0);
-    aa.addClass("active").closest("body").addClass("play");
-  } else {
-    $("ul.dayPlay li").removeClass("before");
-    aa.addClass("before")
-      .removeClass("active")
-      .next("li")
-      .addClass("active")
-      .closest("body")
-      .addClass("play");
-  }
-}
+// 특정 일자로 지정 
+// var deadline = new Date(Date.parse(new Date()) + 12 * 24 * 60 * 60 * 1000);
+var deadline = new Date(2023, 4, 13, 16, 0, 0, 0); // 예시 : "2023년 5월 13일 오후 4시" 로 지정
+var c = new Clock(deadline, function(){ alert('countdown complete') });
+document.body.appendChild(c.el);
